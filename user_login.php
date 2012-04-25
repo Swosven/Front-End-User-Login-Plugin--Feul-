@@ -17,7 +17,7 @@ i18n_merge(THISFILE_UL) || i18n_merge(THISFILE_UL, 'en_US');
 # register plugin
 register_plugin(
 	$thisfile, 
-	'Front-End User Login', 
+	i18n_r(THISFILE_UL.'/PLUGIN_TITLE'), 
 	'3.1', 			
 	'Mike Henken',	
 	'http://michaelhenken.com/', 
@@ -61,11 +61,11 @@ function makeNavTab()
 {
 	$plugin = 'user_login';
 	$class = '';
-	$txt = '<em>U</em>ser Management';
+	$txt = i18n_r(THISFILE_UL.'/PLUGIN_NAV');
 	if (@$_GET['id'] == @$plugin) {
 		$class='class="tabSelected"';
 	}
-	echo '<li><a href="load.php?id='.$plugin.'" '.$class.' >';
+	echo '<li><a href="load.php?id=', $plugin, '" ', $class, ' >';
 	echo $txt;
 	echo "</a></li>";
 }	
@@ -104,18 +104,18 @@ function user_login_admin()
 	$Feul = new Feul;
 	if(isset($Feul->first) && !isset($_GET['settings']))
 	{
-		echo '<div class="error"><a href="load.php?id=user_login&settings">Click Here</a> to Select Storage Method &amp; other settings.</div>';
+		echo '<div class="error"><a href="load.php?id=user_login&settings">', i18n_r(THISFILE_UL.'/CLICKHERE'), '</a> ', i18n_r(THISFILE_UL.'/CLICKHERETXT'), '</div>';
 	}
 ?>	
 	<link rel="stylesheet" type="text/css" href="../plugins/user-login/css/admin_style.css" />
 	<div style="width:100%;margin:0 -15px -15px -10px;padding:0px;">
-		<h3  class="floated">Front-End User Login Plugin</h3>
+		<h3  class="floated"><?php i18n(THISFILE_UL.'/FEUL'); ?></h3>
 		<div class="edit-nav clearfix">
 			<p>
-				<a href="load.php?id=user_login&help">Help</a>
-				<a href="load.php?id=user_login&settings">Settings</a>
-				<a href="load.php?id=user_login&email=yes">Email Users</a>
-				<a href="load.php?id=user_login&manage=yes">Manage Users</a>
+				<a href="load.php?id=user_login&help"><?php i18n('HELP'); ?></a>
+				<a href="load.php?id=user_login&settings"><?php i18n('SETTINGS'); ?></a>
+				<a href="load.php?id=user_login&email=yes"><?php i18n(THISFILE_UL.'/EMAIL_USERS'); ?></a>
+				<a href="load.php?id=user_login&manage=yes"><?php i18n(THISFILE_UL.'/MANAGE_USERS'); ?></a>
 			</p>
 		</div>
 	</div>
@@ -134,10 +134,10 @@ function user_login_admin()
 					// Make Edit Form For Each User XML File Found
 					foreach (glob($dir) as $file) 
 					{
-						$xml = simplexml_load_file($file) or die("Unable to load XML file!");
+						$xml = simplexml_load_file($file) or die( i18n_r(THISFILE_UL.'/UNABLE_LOADXML') );
 						$Feul->processEmailUser($xml->EmailAddress, $xml->Username, $_POST['email'], $_POST['subject'], $_POST['post-email-message']);
 					}
-					echo '<div class="updated">Emails Successfully Sent</div>';
+					echo '<div class="updated">', i18n_r(THISFILE_UL.'/EMAILS_SENT'), '</div>';
 				}
 
 				elseif($Feul->Storage == 'DB')
@@ -149,11 +149,11 @@ function user_login_admin()
 						{
 							$Feul->processEmailUser($row['EmailAddress'], $row['Username'], $_POST['email'], $_POST['subject'], $_POST['post-email-message']);
 						}
-						echo '<div class="updated">Emails Successfully Sent</div>';
+						echo '<div class="updated">', i18n_r(THISFILE_UL.'/EMAILS_SENT'), '</div>';
 					}
 					catch(PDOException $e)
 					{
-						echo '<div class="error">Error: '.$e->getMessage().'</div>';
+						echo '<div class="error">', i18n_r(THISFILE_UL.'/ERROR'), $e->getMessage().'</div>';
 					}
 				}
 			}
@@ -162,40 +162,40 @@ function user_login_admin()
 				$emails = $Feul->processEmailUser($_POST['email_to'], null, $_POST['email'], $_POST['subject'], $_POST['post-email-message']);
 				if($emails != false)
 				{
-					echo '<div class="updated">Email Successfully Sent</div>';
+					echo '<div class="updated">', i18n_r(THISFILE_UL.'/EMAILS_SENT'), '</div>';
 				}
 			}
 		}
 	global $text_area_name;
 	$text_area_name = 'post-email-message';
 	?>
-		<h3>Send Email To Users</h3>
+		<h3><?php i18n(THISFILE_UL.'/EMAIL_TITLE'); ?></h3>
 		<form method="post" action="load.php?id=user_login&email=yes&send-email=yes">
 			<p>
-				<label for="from-email">"From" Email Address</label>
+				<label for="from-email"><?php i18n(THISFILE_UL.'/FROM_LABEL'); ?></label>
 				<input type="text" name="email" class="text" value="<?php echo $Feul->getData('email'); ?>" />
 			</p>
 			<div style="padding:10px;margin-bottom:15px;background-color:#f6f6f6;">
 			<p>
-				<label style="font-size:15px;padding-bottom:3px;">Check This Box To Send To All Users</label>
+				<label style="font-size:15px;padding-bottom:3px;"><?php i18n(THISFILE_UL.'/SEND_ALL_LABEL'); ?></label>
 				<input type="checkbox" name="send_all" />
 			</p>
 			<p style="margin-top:-10px; margin-bottom:10px;">
-				<label style="font-size:18px;color:red;">OR:</label>
+				<label style="font-size:18px;color:red;"><?php i18n(THISFILE_UL.'/OR'); ?></label>
 			</p>
 			<p>
-				<label for="subject" style="font-size:15px;padding-bottom:3px;">Enter Recipitent's email address(s) here. Seperated by comma</label>
+				<label for="subject" style="font-size:15px;padding-bottom:3px;"><?php i18n(THISFILE_UL.'/EMAILS_LABEL'); ?></label>
 				<input type="text" name="email_to" class="text" value="" />
 			</p>
 			</div>
 			<p>
-				<label for="subject">Email Subject</label>
+				<label for="subject"><?php i18n(THISFILE_UL.'/SUBJECT_LABEL'); ?></label>
 				<input type="text" name="subject" class="text" value="" />
 			</p>
-			<label for="email-message">Message:</label>
+			<label for="email-message"><?php i18n(THISFILE_UL.'/MSG_LABEL'); ?></label>
 			<textarea name="post-email-message"></textarea>
 			<?php include(USERLOGINPATH . 'ckeditor.php'); ?>
-			<input type="submit" class="submit" name="send-email" value="Submit" />
+			<input type="submit" class="submit" name="send-email" value="<?php i18n(THISFILE_UL.'/BTN_SUBMIT'); ?>" />
 		</form>
 	<?php
 	}
@@ -206,11 +206,11 @@ function user_login_admin()
 			$submit_settings = $Feul->processSettings();
 			if($submit_settings == true)
 			{
-				echo '<div class="updated">Front-End User Login Settings Succesfully Edited</div>';
+				echo '<div class="updated">', i18n_r(THISFILE_UL.'/SAVE_SETTINGS_OK'), '</div>';
 			}
 			else
 			{
-				echo '<div class="error">Settings Could Not Be Saved!</div>';
+				echo '<div class="error">', i18n_r(THISFILE_UL.'/SAVE_SETTINGS_NO'), '</div>';
 			}
 		}
 		elseif(isset($_GET['create_db']))
@@ -218,7 +218,7 @@ function user_login_admin()
 			$create_db = $Feul->createDB();
 			if($create_db != false)
 			{
-				echo '<div class="updated">Database Created</div>';
+				echo '<div class="updated">', i18n_r(THISFILE_UL.'/DB_CREA_OK'), '</div>';
 			}
 		}
 		elseif(isset($_GET['create_tb']))
@@ -226,7 +226,7 @@ function user_login_admin()
 			$check_table = $Feul->checkTable();
 			if($check_table == '1')
 			{
-				echo '<div class="error">Database Table Already Exists</div>';
+				echo '<div class="error">', i18n_r(THISFILE_UL.'/DB_CREA_NO'), '</div>';
 			}
 			else
 			{
@@ -234,11 +234,11 @@ function user_login_admin()
 				$check_table_again = $Feul->checkTable();
 				if($check_table_again == '1')
 				{
-					echo '<div class="updated">Database Table Created</div>';
+					echo '<div class="updated">', i18n_r(THISFILE_UL.'/DBT_CREA_OK'), '</div>';
 				}
 				elseif($check_table_again != 1)
 				{
-					echo '<div class="error">Database Table Could Not Be Created</div>';
+					echo '<div class="error">', i18n_r(THISFILE_UL.'/DBT_CREA_NO'), '</div>';
 				}
 			}
 		}
@@ -246,86 +246,86 @@ function user_login_admin()
 			<form method="post">
 			<h2>Storage Settings</h2>
 			<p>
-				<label>Choose Storage Method</label>
-				<input type="radio" name="storage" value="XML" <?php if($Feul->Storage == 'XML') { echo ' CHECKED'; } ?> /> XML
+				<label><?php i18n(THISFILE_UL.'/CHOOSE_STORAGE'); ?></label>
+				<input type="radio" name="storage" value="XML" <?php if($Feul->Storage == 'XML') { echo ' CHECKED'; } ?> /> <?php i18n(THISFILE_UL.'/XML'); ?>
 				<br/>
-				<input type="radio" name="storage" value="DB" <?php if($Feul->Storage == 'DB') { echo ' CHECKED'; } ?> /> Database
+				<input type="radio" name="storage" value="DB" <?php if($Feul->Storage == 'DB') { echo ' CHECKED'; } ?> /> <?php i18n(THISFILE_UL.'/DATABASE'); ?>
 			</p>
 			
-			<h4>Database Settings</h4>
+			<h4><?php i18n(THISFILE_UL.'/DB_SETTINGS'); ?></h4>
 			<p>
-				<label>Database Host</label>
+				<label><?php i18n(THISFILE_UL.'/DB_HOST'); ?></label>
 				<input type="text" class="text full" name="db_host" value="<?php if($Feul->DB_Host == '') { } else { echo $Feul->DB_Host; } ?>" />
 			</p>
 			<p>
-				<label>Database User</label>
+				<label><?php i18n(THISFILE_UL.'/DB_USER'); ?></label>
 				<input type="text" class="text full" name="db_user" value="<?php if($Feul->DB_User == '') { } else { echo $Feul->DB_User; } ?>" />
 			</p>
 			<p>
-				<label>Database Password</label>
+				<label><?php i18n(THISFILE_UL.'/DB_PWD'); ?></label>
 				<input type="text" class="text full" name="db_pass" value="<?php if($Feul->DB_Pass == '') {  } else { echo $Feul->DB_Pass; } ?>" />
 			</p>
 			<p>
-				<label>Database Name</label>
-				You can choose any database name you would like. <strong>If the auto-creation fails</strong> you might need to prefix the db_name with your mysql username (ex: username_dbname)
+				<label><?php i18n(THISFILE_UL.'/DB_NAME'); ?></label>
+				<?php i18n(THISFILE_UL.'/DB_NAMETXT'); ?>
 				<input type="text" class="text full" name="db_name" value="<?php if($Feul->DB_Name == '') { echo ''; } else { echo $Feul->DB_Name; } ?>" />
 			</p>
 			<p>
-				<label>Database Table Name</label>
-				We strongly recommend leaving this as 'users'<br/>
+				<label><?php i18n(THISFILE_UL.'/DBT_NAME'); ?></label>
+				<?php i18n(THISFILE_UL.'/DBT_NAMETXT'); ?><br/>
 				<input type="text" class="text full" name="db_table_name" value="<?php if($Feul->DB_Table_Name == '') { echo 'users'; } else { echo $Feul->DB_Table_Name; } ?>" />
 			</p>
 			<p>
-				<label>PDO Errors (Database Error Messages)</label>
-				<input type="radio" name="errors" value="On" <?php if($Feul->Errors == 'On') { echo ' CHECKED'; } ?> /> Enable
+				<label><?php i18n(THISFILE_UL.'/PDO_LABEL'); ?></label>
+				<input type="radio" name="errors" value="On" <?php if($Feul->Errors == 'On') { echo ' CHECKED'; } ?> /> <?php i18n(THISFILE_UL.'/ENABLE'); ?>
 				<br/>
-				<input type="radio" name="errors" value="Off" <?php if($Feul->Errors == 'Off') { echo ' CHECKED'; } ?> /> Disable
+				<input type="radio" name="errors" value="Off" <?php if($Feul->Errors == 'Off') { echo ' CHECKED'; } ?> /> <?php i18n(THISFILE_UL.'/DISABLE'); ?>
 			</p>
 			<p>
-				<input type="submit" name="Feul_settings_form" class="submit" value="Submit" />
+				<input type="submit" name="Feul_settings_form" class="submit" value="<?php i18n(THISFILE_UL.'/BTN_SUBMIT'); ?>" />
 			</p>
 			<p>
-				<a href="load.php?id=user_login&settings&create_db">Attempt Create Database</a><br/>
-				<a href="load.php?id=user_login&settings&create_tb">Attempt Create DB Table</a>
+				<a href="load.php?id=user_login&settings&create_db"><?php i18n(THISFILE_UL.'/TEST_CREA_DB'); ?></a><br/>
+				<a href="load.php?id=user_login&settings&create_tb"><?php i18n(THISFILE_UL.'/TEST_CREA_DBT'); ?></a>
 			</p>
 			</div>
 			<div class="main" style="margin-top:-10px;">
-				<h2>Email Settings</h2>
+				<h2><?php i18n(THISFILE_UL.'/EMAIL_SETTINGS'); ?></h2>
 				<p>
-					<label>Edit Registration "From" Email Address</label>This is the "From" address that shows in the "Registration Email" the user gets upon registering:<br/>
+					<label><?php i18n(THISFILE_UL.'/EMAIL_SLABEL'); ?></label><?php i18n(THISFILE_UL.'/EMAIL_SLABEL_TXT'); ?><br/>
 					<input type="text" name="post-from-email" class="text full" value="<?php echo $Feul->getData('email'); ?>" />
 				</p>
 				
 			</div>
 			<div class="main" style="margin-top:-10px;">
-			<h2>CSS &amp; Protected Message</h2>
+			<h2><?php i18n(THISFILE_UL.'/CSS_TITLE'); ?></h2>
 				<p>
-					<label>Edit Login Container CSS</label>
+					<label><?php i18n(THISFILE_UL.'/CSS_LABEL1'); ?></label>
 					<textarea name="post-login-container" class="full" style="height:300px;">
 						<?php echo $Feul->LoginCss; ?>
 					</textarea>
 				</p>
 				<p>
-					<label>Edit Welcome Box CSS</label>
+					<label><?php i18n(THISFILE_UL.'/CSS_LABEL2'); ?></label>
 					<textarea name="post-welcome-box" class="full" style="height:300px;">
 						<?php echo $Feul->WelcomeCss; ?>
 					</textarea>
 				</p>
 				<p>
-					<label>Edit Register Box CSS</label>
+					<label><?php i18n(THISFILE_UL.'/CSS_LABEL3'); ?></label>
 					<textarea name="post-register-box" class="full" style="height:300px;">
 						<?php echo $Feul->RegisterCss; ?>
 					</textarea>
 				</p>
 				<p>
-					<label>Edit Protected Message</label>
+					<label><?php i18n(THISFILE_UL.'/MSG_LABEL2'); ?></label>
 					<textarea name="post-protected-message">
 						<?php global $text_area_name; $text_area_name = 'post-protected-message'; echo $Feul->ProtectedMessage; ?>
 					</textarea>
 					</p>
 				<?php include(USERLOGINPATH . 'ckeditor.php'); ?>
 				<p>
-					<input type="submit" name="Feul_settings_form" class="submit" value="Submit" />
+					<input type="submit" name="Feul_settings_form" class="submit" value="<?php i18n(THISFILE_UL.'/BTN_SUBMIT'); ?>" />
 				</p>
 			</form>
 			<br/>
@@ -375,56 +375,54 @@ function user_login_admin()
 		if(isset($_GET['convert']))
 		{
 			$convert = $Feul->convertXmlToDB();
-			echo '<div class="updated">Users Sucesfully Converted</div>';
+			echo '<div class="updated">', i18n_r(THISFILE_UL.'/USR_CONV_OK'), '</div>';
 		}
 	?>
-		<h2>Plugin Information:</h2>
+		<h2><?php i18n(THISFILE_UL.'/PLUGIN_INFOS'); ?></h2>
 
-		<h4>Functions</h4>
+		<h4><?php i18n(THISFILE_UL.'/FUNCTIONS'); ?></h4>
 
 		<p>
-			<label>Display Login Form:</label>
+			<label><?php i18n(THISFILE_UL.'/DISPLAY_LABEL1'); ?></label>
 			<?php highlight_string('<?php echo show_login_box(); ?>'); ?>
 		</p>
 
 		<p>
-			<label>Display Welcome Message:</label>
-			This is displayed if the user is logged in. It consists of "Welcome Username" and a logout link.<br/>
+			<label><?php i18n(THISFILE_UL.'/DISPLAY_LABEL2'); ?></label>
+			<?php i18n(THISFILE_UL.'/DISPLAY_L2TXT'); ?><br/>
 			<?php highlight_string('<?php echo welcome_message_login(); ?>'); ?>
 		</p>
 
 		<p>
-			<label>Display Register Form:</label>
+			<label><?php i18n(THISFILE_UL.'/DISPLAY_LABEL3'); ?></label>
 			<?php highlight_string('<?php user_login_register(); ?>'); ?>
 		</p>
 
-		<h4>Showing Content To Only Logged In Users</h4>
+		<h4><?php i18n(THISFILE_UL.'/SHOW_USR_ONLY'); ?></h4>
 		<ol>
-			<li>You could block access to a particular page by choosing "Members Only" in the "Page Options" for that page.<br/>
-				If a page is "Members Only", when a user is not logged in they will see the "Protected Message" which can be changed <a href="load.php?id=user_login&settings">here</a>
+			<li><?php i18n(THISFILE_UL.'/SHOW_TXT1'); ?> <a href="load.php?id=user_login&settings"><?php i18n(THISFILE_UL.'/SHOW_HERE'); ?></a>
 			</li><br/>
 			<li>
-				If you would like "Members Only" content in your template you will have to use a little php. <br/> Below is an example of how to display "Hello World" to only logged in users.<br/>
+				<?php i18n(THISFILE_UL.'/SHOW_TXT2'); ?><br/>
 <pre>
 <?php highlight_string('<?php if(!empty($_SESSION[\'LoggedIn\']))	{ ?>'); ?>
-	Helo World
+	Hello World
 <?php highlight_string('<?php } ?>'); ?>
 </pre>
 			</li>
 		</ol>
 
-		<h4>Further Help &amp; Support</h4>
+		<h4><?php i18n(THISFILE_UL.'/MORE_HELP'); ?></h4>
 		<p>
-			If you run into any bugs/errors or need any assitance please visit the support forums <a href="http://get-simple.info/forum/topic/2342/front-end-user-login-plugin-xml-ver-25/">Here</a>
+			<?php i18n(THISFILE_UL.'/MORE_HELPTXT'); ?> <a href="http://get-simple.info/forum/topic/2342/front-end-user-login-plugin-xml-ver-25/"><?php i18n(THISFILE_UL.'/SHOW_HERE'); ?></a>
 		</p>
 		</div>
 
 		<div class="main" style="margin-top:-10px;">
-		<h2>Converting XML Users To DB Users</h2>
+		<h2><?php i18n(THISFILE_UL.'/CONVERT_USERS'); ?></h2>
 		<p>
-			Clicking the below link will convert all xml users to your database.<br/>
-			<strong>Your database information on the settings page needs to be filled out and the database and table need to be created before converting.</strong><br/>
-			<a href="load.php?id=user_login&help&convert">Convert Users</a>
+			<?php i18n(THISFILE_UL.'/CONVERT_USRT'); ?><br/>
+			<a href="load.php?id=user_login&help&convert"><?php i18n(THISFILE_UL.'/CONVERT_ULINK'); ?></a>
 		</p>
 	<?php
 	}
@@ -437,11 +435,11 @@ function user_login_admin()
 				$Add_User = $Feul->processAddUserAdmin($_POST['usernamec'],$_POST['userpassword'],$_POST['useremail']);
 				if($Add_User == false) 
 				{
-					echo '<div class="error">Username Already Taken</div>';
+					echo '<div class="error">', i18n_r(THISFILE_UL.'/UNAME_EXISTS'), '</div>';
 				}
 				else
 				{
-					echo '<div class="updated">User Successfully Added</div>';
+					echo '<div class="updated">', i18n_r(THISFILE_UL.'/USER_ADDED'), '</div>';
 				}
 			}
 			elseif (isset($_GET['deleteuser'])) 
@@ -456,11 +454,11 @@ function user_login_admin()
 				}
 				if($deleteUser == true)
 				{
-					echo '<div class="updated" style="display: block;">'.$_GET['deletename'].' Has Been Successfully Deleted</div>';
+					echo '<div class="updated" style="display: block;">', $_GET['deletename'], i18n_r(THISFILE_UL.'/USER_DEL_OK'), '</div>';
 				}
 				else
 				{
-					echo '<div class="updated" style="display: block;"><span style="color:red;font-weight:bold;">ERROR!!</span> - Unable To Delete User</div>';
+					echo '<div class="updated" style="display: block;"><span style="color:red;font-weight:bold;">', $_GET['deletename'], i18n_r(THISFILE_UL.'/USER_DEL_NO'), '</div>';
 				}
 			}
 		}
@@ -479,38 +477,38 @@ function manageUsers()
 		?>
 		<div id="profile" class="hide-div section" style="display:none;margin-top:-30px;">
 			<form method="post" action="load.php?id=user_login&manage=yes&adduser=yes">
-				<h3>Add New User</h3>
+				<h3><?php i18n(THISFILE_UL.'/ADD_USER'); ?></h3>
 				<div class="leftsec">
 					<p>
-						<label for="usernamec" >Username:</label>
+						<label for="usernamec" ><?php i18n(THISFILE_UL.'/UNAME'); ?></label>
 						<input class="text" id="usernamec" name="usernamec" type="text" value="" />
 					</p>
 				</div>
 				<div class="rightsec">
 					<p>
-						<label for="useremail" >Email :</label>
+						<label for="useremail" ><?php i18n(THISFILE_UL.'/UEMAIL'); ?></label>
 						<input class="text" id="useremail" name="useremail" type="text" value="" />
 					</p>
 				</div>
 				<div class="leftsec">
 					<p>
-						<label for="userpassword" >Password:</label>
+						<label for="userpassword" ><?php i18n(THISFILE_UL.'/UPWD'); ?></label>
 						<input autocomplete="off" class="text" id="userpassword" name="userpassword" type="text" value="" />
 					</p>
 				</div>
 				<div class="clear"></div>
 				<p id="submit_line" >
 					<span>
-						<input class="submit" type="submit" name="submitted" value="Add New User" />
+						<input class="submit" type="submit" name="submitted" value="<?php i18n(THISFILE_UL.'/ADD_USER'); ?>" />
 					</span> &nbsp;&nbsp;<?php i18n('OR'); ?>&nbsp;&nbsp; 
 					<a class="cancel" href="#"><?php i18n('CANCEL'); ?></a>
 				</p>
 			</form>
 		</div>
-		<h3 class="floated">User Management</h3>
+		<h3 class="floated"><?php i18n(THISFILE_UL.'/USER_MNGT'); ?></h3>
 		<div class="edit-nav clearfix">
 			<p>
-				<a href="#" id="add-user">Add New User</a>
+				<a href="#" id="add-user"><?php i18n(THISFILE_UL.'/ADD_USER'); ?></a>
 			</p>
 		</div>
 		<?php
@@ -519,8 +517,8 @@ function manageUsers()
 		?>
 			<table class="highlight" style="width:900px">
 				<tr>
-					<th>Name</th>
-					<th>Email</th>
+					<th><?php i18n(THISFILE_UL.'/NAME'); ?></th>
+					<th><?php i18n(THISFILE_UL.'/EMAIL'); ?></th>
 				<tbody>
 			<?php
 			// Make Edit Form For Each User XML File Found
@@ -555,7 +553,7 @@ function manageUsers()
 		}
 		elseif($users == false)
 		{
-			echo '<p><strong>No Users Exist</strong></p>';
+			echo '<p><strong>', i18n_r(THISFILE_UL.'/NO_USERS'), '</strong></p>';
 		}
 		?>
 	<script type="text/javascript">
@@ -584,26 +582,26 @@ function editUser($id)
 	<form method="post" action="load.php?id=user_login&edit_user=<?php echo $id; ?>">
 		<div class="leftsec">
 			<p>
-				<label for="usernamec" >Name:</label>
+				<label for="usernamec" ><?php i18n(THISFILE_UL.'/NAME2'); ?></label>
 				<input class="text" id="usernamec" name="usernamec" type="text" value="<?php echo $Feul->getUserDataID($id,'Username'); ?>" />
 			</p>
 		</div>
 		<div class="rightsec">
 			<p>
-				<label for="useremail" >Email :</label>
+				<label for="useremail" ><?php i18n(THISFILE_UL.'/UEMAIL'); ?></label>
 				<input class="text" id="useremail" name="useremail" type="text" value="<?php echo $Feul->getUserDataID($id,'EmailAddress'); ?>" />
 			</p>
 		</div>
 		<div class="leftsec">
 			<p>
-				<label for="userpassword" >Change Password:</label>
+				<label for="userpassword" ><?php i18n(THISFILE_UL.'/CHANGE_PWD'); ?></label>
 				<input autocomplete="off" class="text" id="userpassword" name="userpassword" type="text" value="" />
 			</p>
 		</div>
 		<div class="clear"></div>
 		<p id="submit_line">
 			<span>
-				<input class="submit" type="submit" name="Feul_edit_user" value="Submit Changes" /> &nbsp;&nbsp;Or&nbsp;&nbsp; <a class="cancel" style="color: #D94136;text-decoration:underline;cursor:pointer" ONCLICK="decision('Are You Sure You Want To Delete <?php echo $Feul->getUserDataID($id,'Username'); ?>?','load.php?id=user_login&manage=yes&deleteuser=<?php echo $id; ?>&deletename=<?php echo $Feul->getUserDataID($id,'Username'); ?>')">Delete User</a>
+				<input class="submit" type="submit" name="Feul_edit_user" value="Submit Changes" /> &nbsp;&nbsp;<?php i18n('OR'); ?>&nbsp;&nbsp; <a class="cancel" style="color: #D94136;text-decoration:underline;cursor:pointer" ONCLICK="decision('<?php sprintf(i18n_r(THISFILE_UL.'/CONFIRM'), $Feul->getUserDataID($id,'Username')); ?>','load.php?id=user_login&manage=yes&deleteuser=<?php echo $id; ?>&deletename=<?php echo $Feul->getUserDataID($id,'Username'); ?>')"><?php i18n(THISFILE_UL.'/DEL_USER'); ?></a>
 				<input type="hidden" name="nano" value="<?php echo $Feul->getUserDataID($id,'Password'); ?>"/>
 				<input type="hidden" name="old_name" value="<?php echo $Feul->getUserDataID($id,'Username'); ?>"/>
 				<input type="hidden" name="userID" value="<?php echo $id; ?>"/>
@@ -635,24 +633,24 @@ function show_login_box()
 		//HTML Code For Login Container
 		?>
 		<div id="login_box" style="">
-			<h2 class="login_h2">Login</h2>
+			<h2 class="login_h2"><?php i18n(THISFILE_UL.'/LOGIN'); ?></h2>
 			<?php
 				if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['login-form']) && $is_loggedIn == false)
 				{
-					echo '<div class="error">Sorry, your account could not be found. Please try again.</div>';
+					echo '<div class="error">', i18n_r(THISFILE_UL.'/NOACCOUNT'), '</div>';
 				}
 			?>
 			<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>" name="loginform" id="loginform">
 				<p>
-					<label for="username">Username: </label>
+					<label for="username"><?php i18n(THISFILE_UL.'/UNAME'); ?> </label>
 					<input type="text" name="username" class="user_login_username" />
 				</p>
 				<p>
-					<label for="username">Password: </label>
+					<label for="username"><?php i18n(THISFILE_UL.'/UPWD'); ?> </label>
 					<input type="password" name="password" class="user_login_password" />
 				</p>
 				<p>
-					<input type="submit" class="user_login_submit" value="Submit"/>
+					<input type="submit" class="user_login_submit" value="<?php i18n(THISFILE_UL.'/BTN_SUBMIT'); ?>"/>
 				</p>
 				<input type="hidden" name="login-form" value="login" />
 			</form>
@@ -674,10 +672,10 @@ function welcome_message_login()
 	{
 		$name  = $_SESSION['Username'];
 		//Display Welcome Message
-		$welcome_box = '<div class="user_login_welcome_box_container"><span class=\"user-login-welcome-label\">Welcome: </span>'.$name.'</div>';
+		$welcome_box = '<div class="user_login_welcome_box_container"><span class=\"user-login-welcome-label\">'. i18n_r(THISFILE_UL.'/WELCOME') .' </span>'.$name.'</div>';
 
 		//Display Logout Link
-		$logout_link = '<a href="'.$SITEURL.'?logout=yes" class="user-login-logout-link">Logout</a>';
+		$logout_link = '<a href="'.$SITEURL.'?logout=yes" class="user-login-logout-link">'. i18n_r(THISFILE_UL.'/LOGOUT') .'</a>';
 		echo $Feul->getData('welcomebox').$welcome_box.$logout_link ;
 	}
 }
@@ -725,7 +723,7 @@ function user_login_register()
 				$addUser = $Feul->processAddUserAdmin($_POST['username'], $_POST['password'], $_POST['email']);
 				if($addUser == true)
 				{
-					echo '<div class="success">Your account was successfully created</div>';
+					echo '<div class="success">', i18n_r(THISFILE_UL.'/ACCOUNT_SUCCESS'), '</div>';
 					$Feul->checkLogin(true, $_POST['email'], $_POST['password']);
 					//Send Email
 					$to  = $_POST['email'];
@@ -733,20 +731,20 @@ function user_login_register()
 					$chosen_password = $_POST['password'];
 
 					// subject
-					$subject = 'Your New Account ('.$Username.') Is Setup!';
+					$subject = sprintf(i18n_r(THISFILE_UL.'/MSG_SUBJECT'), $Username);
 
 					// message
 					$message = '
 					<html>
 					<head>
-					<title>Your New Account Is Setup!</title>
+					<title>'. i18n_r(THISFILE_UL.'/MSG_TITLE') .'</title>
 					</head>
 					<body>
-					<h2><strong>Below is your login information:</strong></h2><br/><br/>
-					<strong>Username: </strong>'.$Username.'<br/>
-					<strong>Password: </strong>'.$chosen_password.'<br/>
+					<h2><strong>'. i18n_r(THISFILE_UL.'/MSG_TXTINFO') .'</strong></h2><br/><br/>
+					<strong>'. i18n_r(THISFILE_UL.'/UNAME') .' </strong>'.$Username.'<br/>
+					<strong>'. i18n_r(THISFILE_UL.'/UPWD') .' </strong>'.$chosen_password.'<br/>
 					<br/>
-					<a href="'.$SITEURL.'">Click Here To Visit Website</a>
+					<a href="'.$SITEURL.'">'. i18n_r(THISFILE_UL.'/UPWD') .'</a>
 					</body>
 					</html>
 					';
@@ -757,7 +755,7 @@ function user_login_register()
 
 					// Additional headers
 					//$headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
-					$headers .= 'From: New Account <'.$Feul->getData('email').'>' . "\r\n";
+					$headers .= 'From: '. i18n_r(THISFILE_UL.'/NEWACCOUNT') .' <'.$Feul->getData('email').'>' . "\r\n";
 					//$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
 					//$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
 
@@ -765,38 +763,38 @@ function user_login_register()
 					$success = mail($to, $subject, $message, $headers);
 					if(!$success)
 					{
-						$error = '<div class="error">Unable to send welcome email.</div>';
+						$error = '<div class="error">'. i18n_r(THISFILE_UL.'/MSG_SEND_ERR') .'</div>';
 					}
 				}
 				else
 				{
-					$error = '<div class="error">User Already Exists</div>';
+					$error = '<div class="error">'. i18n_r(THISFILE_UL.'/USER_EXISTS') .'</div>';
 				}
 			}
 			else
 			{
-				$error = '<div class="error">Please fill in the required fields</div>';
+				$error = '<div class="error">'. i18n_r(THISFILE_UL.'/FILL_FIELDS') .'</div>';
 			}
 		}
 		echo $Feul->getData('registerbox');
 		?>
 			<?php echo $error; ?>
-			<h2 class="register_h2">Register</h2>
+			<h2 class="register_h2"><?php i18n(THISFILE_UL.'/REGISTER'); ?></h2>
 			<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>" name="registerform" id="registerform">
 				<p>
-					<label for="username" class="required" >Username:</label>
+					<label for="username" class="required" ><?php i18n(THISFILE_UL.'/UNAME'); ?></label>
 					<input type="text" class="required" name="username" id="name" />
 				</p>
 				<p>
-					<label for="email" class="required" >Email Address:</label>
+					<label for="email" class="required" ><?php i18n(THISFILE_UL.'/UEMAIL'); ?></label>
 					<input type="text" class="required" name="email" />
 				</p>
 				<p>
-					<label for="password" class="required" >Password:</label>
+					<label for="password" class="required" ><?php i18n(THISFILE_UL.'/UPWD'); ?></label>
 					<input type="password" class="required" name="password" id="password" />
 				</p>
 				<p>
-					<input type="submit" name="register" id="register" value="Register" />
+					<input type="submit" name="register" id="register" value="<?php i18n(THISFILE_UL.'/BTN_REGISTER'); ?>" />
 					<input type="hidden" name="register-form" value="yes" />
 				</p>
 			</form>
@@ -816,7 +814,7 @@ function user_login_edit()
 	?>
 		<div class="leftopt" style="margin-top:20px;">
 			<p class="inline">
-				<label for="member-only">Members Only:</label> 
+				<label for="member-only"><?php i18n(THISFILE_UL.'/MEMBERS_ONLY'); ?></label> 
 				<input type="checkbox" value="yes" name="member-only" style="" <?php echo $member_checkbox; ?> />
 			</p>
 		</div> 
