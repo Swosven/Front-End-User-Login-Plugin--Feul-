@@ -9,6 +9,7 @@ Author URI: http://michaelhenken.com/
 
 # get correct id for plugin
 $thisfile=basename(__FILE__, ".php");
+define('THISFILE_UL', $thisfile);
 
 # register plugin
 register_plugin(
