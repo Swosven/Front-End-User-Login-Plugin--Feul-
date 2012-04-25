@@ -21,7 +21,7 @@ register_plugin(
 	'3.1', 			
 	'Mike Henken',	
 	'http://michaelhenken.com/', 
-	'Allow users to create an account and login to your website. Protects pages. Uses XML Or Database.', 
+	i18n_r(THISFILE_UL.'/PLUGIN_DESC'), 
 	'settings', 
 	'user_login_admin' 
 );
@@ -46,11 +46,11 @@ add_action('nav-tab','makeNavTab');
 //Define Feul Settings File
 define('FeulFile', GSDATAOTHERPATH  . 'user-login.xml');
 
-//Define User Login Plugin's plugins Folder (plugins/user-login/)
-define('USERLOGINPATH', GSPLUGINPATH . 'user-login/');
+//Define User Login Plugin's plugins Folder (plugins/user_login/)
+define('USERLOGINPATH', GSPLUGINPATH . 'user_login/');
 
-//Define User Login Plugin's plugins includes Folder (plugins/user-login/inc/)
-define('LOGININCPATH', GSPLUGINPATH . 'user-login/inc/');
+//Define User Login Plugin's plugins includes Folder (plugins/user_login/inc/)
+define('LOGININCPATH', GSPLUGINPATH . 'user_login/inc/');
 
 //Define The User Data Storage Folder (data/site-users)
 define('SITEUSERSPATH', GSDATAPATH . 'site-users/');
@@ -107,7 +107,7 @@ function user_login_admin()
 		echo '<div class="error"><a href="load.php?id=user_login&settings">', i18n_r(THISFILE_UL.'/CLICKHERE'), '</a> ', i18n_r(THISFILE_UL.'/CLICKHERETXT'), '</div>';
 	}
 ?>	
-	<link rel="stylesheet" type="text/css" href="../plugins/user-login/css/admin_style.css" />
+	<link rel="stylesheet" type="text/css" href="../plugins/user_login/css/admin_style.css" />
 	<div style="width:100%;margin:0 -15px -15px -10px;padding:0px;">
 		<h3  class="floated"><?php i18n(THISFILE_UL.'/FEUL'); ?></h3>
 		<div class="edit-nav clearfix">
