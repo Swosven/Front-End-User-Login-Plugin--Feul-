@@ -11,6 +11,9 @@ Author URI: http://michaelhenken.com/
 $thisfile=basename(__FILE__, ".php");
 define('THISFILE_UL', $thisfile);
 
+# add in this plugin's language file
+i18n_merge(THISFILE_UL) || i18n_merge(THISFILE_UL, 'en_US');
+
 # register plugin
 register_plugin(
 	$thisfile, 
