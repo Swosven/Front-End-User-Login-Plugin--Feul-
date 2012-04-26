@@ -150,7 +150,7 @@ float:left;
 			}
 			else
 			{
-				echo '<div class="updated">Front-End User Login Settings Succesfully Created</div>';
+				echo '<div class="updated">', i18n_r(THISFILE_UL.'/SETTINGS_CREA_OK'), '</div>';
 			}
 		}
 		
@@ -184,11 +184,11 @@ float:left;
 			$create_feul_path = mkdir(SITEUSERSPATH);
 			if($create_feul_path)
 			{
-				echo '<div class="updated">data/site-users Directory Succesfully Created</div>';
+				echo '<div class="updated">', i18n_r(THISFILE_UL.'/SETTINGS_DCREA_OK'), '</div>';
 			}
 			else
 			{
-				echo '<div class="error"><strong>The data/site-users folder could not be created!</strong><br/>You are going to have to create this directory yourelf for the plugin to work properly</div>';
+				echo '<div class="error"><strong>', i18n_r(THISFILE_UL.'/SETTINGS_DCREA_NO'), '</strong><br/>', i18n_r(THISFILE_UL.'/SETTINGS_DCREA_MSG'), '</div>';
 			}
 		}
 	}
@@ -264,7 +264,7 @@ float:left;
 		{
 			if($this->Errors == 'On')
 			{	
-				echo '<div class="error"><strong>Could Not Create Database:</strong> '.$e->getMessage().'</div>';
+				echo '<div class="error"><strong>', i18n_r(THISFILE_UL.'/DB_CREA_NO'), '</strong> '.$e->getMessage().'</div>';
 			}
 		}
 	}
@@ -291,7 +291,7 @@ float:left;
 		{
 			if($this->Errors == 'On')
 			{
-				echo '<div class="error"><strong>Could Not Create Table:</strong> '.$e->getMessage().'</div>';
+				echo '<div class="error"><strong>', i18n_r(THISFILE_UL.'/DBT_CREA_NO'), '</strong> '.$e->getMessage().'</div>';
 			}
 		}
 	}
@@ -312,7 +312,7 @@ float:left;
 		}
 		else
 		{
-			return 'Error: Xml Field Does Not Exist';
+			return i18n_r(THISFILE_UL.'/XML_ERROR');
 		}
 	}
 				
@@ -331,7 +331,7 @@ float:left;
 			foreach (glob($dir) as $file) 
 			{
 				$count++;
-				$result[$count] = simplexml_load_file($file) or die("Unable to load XML file!");
+				$result[$count] = simplexml_load_file($file) or die(i18n_r(THISFILE_UL.'/XML_LOAD_ERR'));
 			}
 		}
 		elseif($this->Storage == 'DB')
@@ -553,7 +553,7 @@ float:left;
 			{
 				if($this->Errors == 'On')
 				{
-					echo '<div class="error">Error: '.$e->getMessage().'</div>';
+					echo '<div class="error">', i18n_r(THISFILE_UL.'/ERROR'), $e->getMessage().'</div>';
 				}
 			}
 			
@@ -628,7 +628,7 @@ float:left;
 			
 			else
 			{
-				print '<div class="updated">User sucesfully edited</div>';
+				echo '<div class="updated">', i18n_r(THISFILE_UL.'/USR_EDIT_OK') ,'</div>';
 			}
 	}
 	
@@ -722,6 +722,7 @@ float:left;
 		$message = '
 		<html>
 		<head>
+		<meta http-equiv="content-type" content="text/html; charset='. i18n_r(THISFILE_UL.'/EMAIL_CHARSET') .'">
 		  <title>'.$subject.'</title>
 		</head>
 		<body>
@@ -732,7 +733,7 @@ float:left;
 
 		// To send HTML mail, the Content-type header must be set
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= 'Content-type: text/html; charset='. i18n_r(THISFILE_UL.'/EMAIL_CHARSET') . "\r\n";
 
 		// Additional headers
 		//$headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
@@ -893,7 +894,7 @@ float:left;
 		// Make Edit Form For Each User XML File Found
 		foreach (glob($dir) as $file) 
 		{
-			$xml = simplexml_load_file($file) or die("Unable to load XML file!");
+			$xml = simplexml_load_file($file) or die( i18n_r(THISFILE_UL.'/XML_LOAD_ERR') );
 			$addUser = $this->processAddUserAdmin($xml->Username, $xml->Password, $xml->EmailAddress, true);
 		}
 	}

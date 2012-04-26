@@ -7,9 +7,6 @@ $i18n = array(
 	'CLICKHERE' 			=> "Click Here",
 	'CLICKHERETXT' 			=> "to Select Storage Method &amp; other settings.",
 	'FEUL' 				=> "Front-End User Login Plugin",
-//	'HELP' 					=> "Help",
-//	'SETTINGS' 				=> "Settings", // admin/lang
-
 	'EMAIL_USERS' 			=> "Email Users",
 	'MANAGE_USERS' 			=> "Manage Users",
 	'UNABLE_LOADXML' 		=> "Unable to load XML file!",
@@ -91,7 +88,7 @@ $i18n = array(
 	'NOACCOUNT' 			=> "Sorry, your account could not be found. Please try again.",
 	'WELCOME' 				=> "Welcome:",
 	'LOGOUT' 				=> "Logout",
-	'ACCOUNT_SUCCESS' 			=> "Your account was successfully created",
+	'ACCOUNT_SUCCESS' 		=> "Your account was successfully created",
 	'MSG_SUBJECT' 			=> "Your New Account (%s) Is Setup!",
 	'MSG_TITLE' 			=> "Your New Account Is Setup!",
 	'MSG_TXTINFO' 			=> "Below is your login information:",
@@ -103,7 +100,23 @@ $i18n = array(
 	
 	'REGISTER'				=> "Register",
 	'BTN_REGISTER'			=> "Register",
-	'MEMBERS_ONLY'			=> "Members Only:",
+	'MEMBERS_ONLY'			=> "Members Only",
+	
+	// for sending e-mails
+	'EMAIL_CHARSET'			=> "UTF-8", // "iso-8859-1"
+	
+	
+	// ### FEUL part ###
+	'SETTINGS_CREA_OK'		=> "Front-End User Login Settings Succesfully Created",
+	'SETTINGS_DCREA_OK'		=> "data/site-users Directory Succesfully Created",
+	'SETTINGS_DCREA_NO'		=> "The data/site-users folder could not be created!",
+	'SETTINGS_DCREA_MSG'	=> "You are going to have to create this directory yourself for the plugin to work properly",
+	'DB_CREA_NO'			=> "Could Not Create Database:",
+	'DBT_CREA_NO'			=> "Could Not Create Table:",
+	'XML_ERROR'				=> "Error: Xml Field Does Not Exist",
+	'XML_LOAD_ERR'			=> "Unable to load XML file!",
+	'USR_EDIT_OK'			=> "User sucesfully edited",
+	
 );
 
 

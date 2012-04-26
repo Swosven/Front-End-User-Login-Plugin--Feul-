@@ -2,13 +2,11 @@
 $i18n = array(
 	'PLUGIN_TITLE' 			=> 'Front-End User Login',
 	'PLUGIN_DESC' 			=> "Permet aux utilisateurs de crééer un compte et de se connecter à votre site. Protège vos pages. Utilise une base de données ou du XML.",
-	'PLUGIN_NAV' 			=> "Gestion des <em>U</em>tilisateurs",
+	'PLUGIN_NAV' 			=> "<em>U</em>tilisateurs",
 	
 	'CLICKHERE' 			=> "Cliquez-là",
 	'CLICKHERETXT' 			=> "pour paramétrer la mémorisation des données et autres options.",
 	'FEUL' 					=> "Front-End User Login Plugin",
-//	'HELP' 					=> "Help",
-//	'SETTINGS' 				=> "Settings", // admin/lang
 
 	'EMAIL_USERS' 			=> "Mailing",
 	'MANAGE_USERS' 			=> "Gestion utilisateurs",
@@ -74,8 +72,8 @@ $i18n = array(
 	'USER_ADDED' 			=> "Utilisateur ajouté",
 	'USER_DEL_OK' 			=> " a bien été supprimé",
 	'USER_DEL_NO' 			=> "ERREUR&nbsp;!!</span> - Impossible de supprimer l'utilisateur",
-	'ADD_USER' 				=> "Ajouter un utilisateur", // no '"'
-	'UNAME' 				=> "Identifiant&nbsp;:",
+	'ADD_USER' 				=> "Ajouter un utilisateur", // no '"' 
+	'UNAME' 				=> "Identifiant&nbsp;:", 
 	'UEMAIL' 				=> "E-mail&nbsp;:",
 	'UPWD' 					=> "Mot de passe&nbsp;:",
 	
@@ -91,7 +89,7 @@ $i18n = array(
 	'NOACCOUNT' 			=> "Désolé, votre compte est introuvable. Réessayez.",
 	'WELCOME' 				=> "Bienvenue&nbsp;:",
 	'LOGOUT' 				=> "Déconnexion",
-	'ACCOUNT_SUCCESS' 			=> "Votre compte a bien été créé",
+	'ACCOUNT_SUCCESS' 		=> "Votre compte a bien été créé",
 	'MSG_SUBJECT' 			=> "Votre nouveau compte (%s) est activé&nbsp;!",
 	'MSG_TITLE' 			=> "Votre nouveau compte est activé&nbsp;!",
 	'MSG_TXTINFO' 			=> "Ci-dessous vos informations de connexion&nbsp;:",
@@ -101,9 +99,24 @@ $i18n = array(
 	'USER_EXISTS' 			=> "Cet utilisateur existe déjà",
 	'FILL_FIELDS' 			=> "Merci de remplir ces champs",
 	
-	'REGISTER'			=> "Inscription",
+	'REGISTER'				=> "Inscription",
 	'BTN_REGISTER'			=> "Valider",
-	'MEMBERS_ONLY'			=> "Réservée aux utilisateurs&nbsp;:",
+	'MEMBERS_ONLY'			=> "Réservée aux utilisateurs",
+	
+	// for sending e-mails
+	'EMAIL_CHARSET'			=> "UTF-8", // "iso-8859-1" ou fr : "iso-8859-15"
+	
+	
+	// ### FEUL part ###
+	'SETTINGS_CREA_OK'		=> "Les paramètres de Front-End User Login Settings ont été créés",
+	'SETTINGS_DCREA_OK'		=> "Le dossier data/site-users a bien été créé",
+	'SETTINGS_DCREA_NO'		=> "Le dossier data/site-users n'a pu être créé&nbsp;!",
+	'SETTINGS_DCREA_MSG'	=> "Vous devez le créer manuellement pour que ce plugin puisse fonctionner correctement",
+	'DB_CREA_NO'			=> "Impossible de créer la base de données&nbsp;:",
+	'DBT_CREA_NO'			=> "Impossible de créer la table dans la base de données&nbsp;:",
+	'XML_ERROR'				=> "Erreur&nbsp;: le champ Xml n'existe pas",
+	'XML_LOAD_ERR'			=> "Impossible d'importer le fichier XML&nbsp;!",
+	'USR_EDIT_OK'			=> "L'utilisateur a bien été modifié",
 );
 
 
