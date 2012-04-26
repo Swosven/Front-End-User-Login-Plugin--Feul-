@@ -737,6 +737,7 @@ function user_login_register()
 					$message = '
 					<html>
 					<head>
+		<meta http-equiv="content-type" content="text/html; charset='. i18n_r(THISFILE_UL.'/EMAIL_CHARSET') .'">
 					<title>'. i18n_r(THISFILE_UL.'/MSG_TITLE') .'</title>
 					</head>
 					<body>
@@ -751,7 +752,7 @@ function user_login_register()
 
 					// To send HTML mail, the Content-type header must be set
 					$headers  = 'MIME-Version: 1.0' . "\r\n";
-					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+					$headers .= 'Content-type: text/html; charset='. i18n_r(THISFILE_UL.'/EMAIL_CHARSET') . "\r\n";
 
 					// Additional headers
 					//$headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
@@ -812,12 +813,10 @@ function user_login_edit()
 		$member_checkbox = "checked";	
 	}
 	?>
-		<div class="leftopt" style="margin-top:20px;">
-			<p class="inline">
-				<label for="member-only"><?php i18n(THISFILE_UL.'/MEMBERS_ONLY'); ?></label> 
-				<input type="checkbox" value="yes" name="member-only" style="" <?php echo $member_checkbox; ?> />
+			<p class="inline post-menu clearfix">
+				<input type="checkbox" value="yes" name="member-only" id="member-only" style="width:20px;padding:0;margin:0;" <?php echo $member_checkbox; ?> />&nbsp;&nbsp;<label for="member-only"><?php i18n(THISFILE_UL.'/MEMBERS_ONLY'); ?></label>
 			</p>
-		</div> 
+		<div class="clear"></div>
 	<?php
 }
 
